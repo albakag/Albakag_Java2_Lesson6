@@ -4,8 +4,7 @@ import java.net.Socket;
 public class Client {
     public static void main(String[] args) throws InterruptedException {
 
-        try (Socket socketClient = new Socket("localhost", 12345))
-        {
+        try (Socket socketClient = new Socket("localhost", 12345)) {
             BufferedReader bufClient = new BufferedReader(new InputStreamReader(System.in));
             DataOutputStream output = new DataOutputStream(socketClient.getOutputStream());
             DataInputStream input = new DataInputStream(socketClient.getInputStream());
@@ -15,7 +14,7 @@ public class Client {
             System.out.println();
             System.out.println("Client writing channel = output & reading channel = input initialized.");
 
-            while(!socketClient.isOutputShutdown()) {
+            while (!socketClient.isOutputShutdown()) {
 
                 if (bufClient.ready()) {
                     System.out.println("Client start writing in channel...");
@@ -26,7 +25,7 @@ public class Client {
                     System.out.println("Client sent a message " + clientMessage + " to server.");
 
                     if (clientMessage.equalsIgnoreCase("bye")) {
-                        if (input.read() > -1)     {
+                        if (input.read() > -1) {
                             String in = input.readUTF();
                             System.out.println("reading...");
                             System.out.println(in);
@@ -34,7 +33,7 @@ public class Client {
                         break;
                     }
                     System.out.println("Client sent message & start waiting for data from server...");
-                    if(input.read() > -1) {
+                    if (input.read() > -1) {
                         System.out.println("reading...");
                         String inputServ = input.readUTF();
                         System.out.println(inputServ);
@@ -47,7 +46,7 @@ public class Client {
             output.close();
             socketClient.close();
 
-        } catch(IOException ex) {
+        } catch (IOException ex) {
             System.out.println(ex.getStackTrace());
         }
     }
